@@ -4,6 +4,7 @@ namespace DMS.GLSL.Contracts
 	public interface IShaderFileExtensions
 	{
 		string AutoDetectShaderFileExtensions { get; }
+		string ShaderHeaderFileExtensions { get; }
 
 		string FragmentShaderFileExtensions { get; }
 
@@ -32,5 +33,36 @@ namespace DMS.GLSL.Contracts
 		string RayClosestHitShaderFileExtensions { get; }
 
 		string RayCallableShaderFileExtensions { get; }
+	}
+
+	public interface IShaderStages
+	{
+		string FragmentShaderStages { get; }
+
+		string VertexShaderStages { get; }
+
+		string GeometryShaderStages { get; }
+
+		string ComputeShaderStages { get; }
+
+		string TessellationControlShaderStages { get; }
+
+		string TessellationEvaluationShaderStages { get; }
+
+		string MeshShaderStages { get; }
+
+		string TaskShaderStages { get; }
+
+		string RayGenerationShaderStages { get; }
+
+		string RayIntersectionShaderStages { get; }
+
+		string RayMissShaderStages { get; }
+
+		string RayAnyHitShaderStages { get; }
+
+		string RayClosestHitShaderStages { get; }
+
+		string RayCallableShaderStages { get; }
 	}
 }

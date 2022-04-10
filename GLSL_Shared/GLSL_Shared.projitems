@@ -34,6 +34,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IUserKeywords.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\ShaderTypeDetector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Errors\ErrorList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Errors\ShaderCompiler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Errors\ShaderContentTypesGenerated.cs">
@@ -110,5 +111,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Settings\" />
   </ItemGroup>
 </Project>

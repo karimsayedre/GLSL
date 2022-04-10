@@ -5,12 +5,17 @@ namespace DMS.GLSL.Options
 	using Microsoft.VisualStudio.Shell;
 	using System.ComponentModel;
 
-	public partial class OptionPage : DialogPage, IShaderFileExtensions
+	public partial class OptionPage : DialogPage, IShaderFileExtensions, IShaderStages
 	{
 		[Category("File extensions")]
 		[DisplayName("Auto detect shader type file extensions")]
 		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
 		public string AutoDetectShaderFileExtensions { get; set; } = ".glsl";
+
+		[Category("File extensions")]
+		[DisplayName("Shader header file extensions")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string ShaderHeaderFileExtensions { get; set; } = ".glslh";
 
 		[Category("File extensions")]
 		[DisplayName("Fragment shader type file extensions")]
@@ -82,5 +87,83 @@ namespace DMS.GLSL.Options
 		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
 		public string RayCallableShaderFileExtensions { get; set; } = ".rcall";
 
+
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		/// Stages
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+
+		[Category("Internal Stages")]
+		[DisplayName("Fragment shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string FragmentShaderStages { get; set; } = "frag";
+
+		[Category("Internal Stages")]
+		[DisplayName("Vertex shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string VertexShaderStages { get; set; } = "vert";
+
+		[Category("Internal Stages")]
+		[DisplayName("Geometry shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string GeometryShaderStages { get; set; } = "geom";
+
+		[Category("Internal Stages")]
+		[DisplayName("Compute shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string ComputeShaderStages { get; set; } = "comp";
+
+		[Category("Internal Stages")]
+		[DisplayName("Tessellation control shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string TessellationControlShaderStages { get; set; } = "tesc";
+
+		[Category("Internal Stages")]
+		[DisplayName("Tessellation evaluation shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string TessellationEvaluationShaderStages { get; set; } = "tese";
+
+		[Category("Internal Stages")]
+		[DisplayName("Mesh shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string MeshShaderStages { get; set; } = "mesh";
+
+		[Category("Internal Stages")]
+		[DisplayName("Task shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string TaskShaderStages { get; set; } = "task";
+
+		[Category("Internal Stages")]
+		[DisplayName("Ray generation shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string RayGenerationShaderStages { get; set; } = "rgen";
+
+		[Category("Internal Stages")]
+		[DisplayName("Ray intersection shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string RayIntersectionShaderStages { get; set; } = "rint";
+
+		[Category("Internal Stages")]
+		[DisplayName("Ray miss shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string RayMissShaderStages { get; set; } = "rmiss";
+
+		[Category("Internal Stages")]
+		[DisplayName("Ray any hit shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string RayAnyHitShaderStages { get; set; } = "rahit";
+
+		[Category("Internal Stages")]
+		[DisplayName("Ray closest hit shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string RayClosestHitShaderStages { get; set; } = "rchit";
+
+		[Category("Internal Stages")]
+		[DisplayName("Ray callable shader stage")]
+		[Description("Space or semicolon separated list of extensions that will receive syntax coloring")]
+		public string RayCallableShaderStages { get; set; } = "rcall";
+
 	}
+
+
 }

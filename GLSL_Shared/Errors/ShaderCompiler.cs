@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using GLSL_Shared.Core;
 
 namespace DMS.GLSL.Errors
 {
@@ -50,14 +51,43 @@ namespace DMS.GLSL.Errors
 			public string DocumentDir { get; }
 		}
 
-		private static readonly IReadOnlyDictionary<string, ShaderType> mappingContentTypeToShaderType = new Dictionary<string, ShaderType>()
+		private static readonly IReadOnlyDictionary<string, ShaderStages> mappingContentTypeToShaderStage = new Dictionary<string, ShaderStages>()
 		{
-			[ShaderContentTypes.Fragment] = ShaderType.FragmentShader,
-			[ShaderContentTypes.Vertex] = ShaderType.VertexShader,
-			[ShaderContentTypes.Geometry] = ShaderType.GeometryShader,
-			[ShaderContentTypes.TessellationControl] = ShaderType.TessControlShader,
-			[ShaderContentTypes.TessellationEvaluation] = ShaderType.TessEvaluationShader,
-			[ShaderContentTypes.Compute] = ShaderType.ComputeShader,
+			[ShaderContentTypes.Header] = ShaderStages.Header,
+			[ShaderContentTypes.RayIntersection] = ShaderStages.RayIntersect,
+			[ShaderContentTypes.RayGeneration] = ShaderStages.RayGen,
+			[ShaderContentTypes.RayMiss] = ShaderStages.RayMiss,
+			[ShaderContentTypes.RayAnyHit] = ShaderStages.RayAnyHit,
+			[ShaderContentTypes.RayCallable] = ShaderStages.RayCallable,
+			[ShaderContentTypes.RayClosestHit] = ShaderStages.RayClosestHit,
+			[ShaderContentTypes.Mesh] = ShaderStages.Mesh,
+			[ShaderContentTypes.Task] = ShaderStages.Task,
+			[ShaderContentTypes.Fragment] = ShaderStages.Fragment,
+			[ShaderContentTypes.Vertex] = ShaderStages.Vertex,
+			[ShaderContentTypes.Geometry] = ShaderStages.Geometry,
+			[ShaderContentTypes.TessellationControl] = ShaderStages.TessellationControl,
+			[ShaderContentTypes.TessellationEvaluation] = ShaderStages.TessellationEvaluation,
+			[ShaderContentTypes.Compute] = ShaderStages.Compute,
+		};
+
+
+		private static readonly IReadOnlyDictionary<ShaderStages, string> mappingShaderStageToContentType = new Dictionary<ShaderStages, string>()
+		{
+			[ShaderStages.Header] = ShaderContentTypes.Header,
+			[ShaderStages.RayIntersect] = ShaderContentTypes.RayIntersection,
+			[ShaderStages.RayGen] = ShaderContentTypes.RayGeneration,
+			[ShaderStages.RayMiss] = ShaderContentTypes.RayMiss,
+			[ShaderStages.RayAnyHit] = ShaderContentTypes.RayAnyHit,
+			[ShaderStages.RayCallable] = ShaderContentTypes.RayCallable,
+			[ShaderStages.RayClosestHit] = ShaderContentTypes.RayClosestHit,
+			[ShaderStages.Mesh] = ShaderContentTypes.Mesh,
+			[ShaderStages.Task] = ShaderContentTypes.Task,
+			[ShaderStages.Fragment] = ShaderContentTypes.Fragment,
+			[ShaderStages.Vertex] = ShaderContentTypes.Vertex,
+			[ShaderStages.Geometry] = ShaderContentTypes.Geometry,
+			[ShaderStages.TessellationControl] = ShaderContentTypes.TessellationControl,
+			[ShaderStages.TessellationEvaluation] = ShaderContentTypes.TessellationEvaluation,
+			[ShaderStages.Compute] = ShaderContentTypes.Compute,
 		};
 
 		private Task taskGL;
@@ -90,18 +120,71 @@ namespace DMS.GLSL.Errors
 			}
 		}
 
-		private static string AutoDetectShaderContentType(string shaderCode)
+		private static Dictionary<ShaderStages, string> AutoDetectShaderContentType(string shaderCode, Dictionary<ShaderStages, List<string>> potentialStages)
 		{
-			var type = GLSLhelper.ShaderTypeDetector.AutoDetectFromCode(shaderCode);
-			switch (type)
+
+			List<Tuple<int, ShaderStages>> indicesOfStages = ShaderTypeDetector.AutoDetectFromCode(shaderCode, potentialStages);
+
+			Dictionary<ShaderStages, string> result = new Dictionary<ShaderStages, string>();
+
+
+			if (indicesOfStages.Count > 1)
 			{
-				case GLSLhelper.ShaderType.Geometry: return ShaderContentTypes.Geometry;
-				case GLSLhelper.ShaderType.Compute: return ShaderContentTypes.Compute;
-				case GLSLhelper.ShaderType.TessellationControl: return ShaderContentTypes.TessellationControl;
-				case GLSLhelper.ShaderType.TessellationEvaluation: return ShaderContentTypes.TessellationEvaluation;
-				case GLSLhelper.ShaderType.Vertex: return ShaderContentTypes.Vertex;
-				default: return ShaderContentTypes.Fragment;
+				// Get first stage
+				int index = indicesOfStages[0].Item1;
+				ShaderStages stage = indicesOfStages[0].Item2;
+
+				string stageStr = shaderCode.Substring(0, indicesOfStages[1].Item1);
+				int lineCount = stageStr.Substring(0, index).Split('\n').Length;
+
+				int endOfFirstLine = stageStr.IndexOf('\n', lineCount + 1);
+				stageStr = stageStr.Insert(endOfFirstLine, "\r#extension GL_GOOGLE_include_directive : enable");
+				lineCount += stageStr.Substring(index).Split('\n').Length - 1;
+				result.Add(stage, stageStr);
+
+				string skippedLines = string.Empty;
+
+				for (int i = 1; i < indicesOfStages.Count - 1; ++i)
+				{
+					index = indicesOfStages[i].Item1;
+					stage = indicesOfStages[i].Item2;
+
+					for (int j = 0; j < lineCount; ++j)
+						skippedLines.Insert(0, "\n");
+
+					stageStr = shaderCode.Substring(index, indicesOfStages[i + 1].Item1 - index);
+					endOfFirstLine = stageStr.IndexOf('\n');
+					stageStr = stageStr.Insert(endOfFirstLine, "\r#extension GL_GOOGLE_include_directive : enable");
+
+					lineCount += stageStr.Split('\n').Length - 1;
+
+					result.Add(stage, skippedLines + stageStr);
+				}
+
+				index = indicesOfStages[indicesOfStages.Count - 1].Item1;
+				stage = indicesOfStages[indicesOfStages.Count - 1].Item2;
+
+				stageStr = shaderCode.Substring(index);
+				endOfFirstLine = stageStr.IndexOf('\n');
+				stageStr = stageStr.Insert(endOfFirstLine, "\r#extension GL_GOOGLE_include_directive : enable");
+
+
+				skippedLines = "";
+				for (int j = 0; j < lineCount - 1; ++j)
+					skippedLines += "\n";
+
+				result.Add(stage, skippedLines + stageStr);
 			}
+			else
+			{
+				int endOfFirstLine = shaderCode.IndexOf('\n', indicesOfStages[0].Item1 + 1);
+				if (endOfFirstLine != -1)
+					shaderCode = shaderCode.Insert(endOfFirstLine, "\r#extension GL_GOOGLE_include_directive : enable");
+
+				result.Add(indicesOfStages[0].Item2, shaderCode);
+			}
+
+			return result;
 		}
 
 		private static string ExpandedCode(string shaderCode, string shaderFileDir, ICompilerSettings settings, HashSet<string> includedFiles = null)
@@ -161,19 +244,47 @@ namespace DMS.GLSL.Errors
 
 		private static string Compile(string shaderCode, string shaderContentType, ILogger logger, ICompilerSettings settings)
 		{
+			Dictionary<ShaderStages, string> shaderStageStrs;
 			if (ShaderContentTypes.AutoDetect == shaderContentType)
 			{
-				shaderContentType = AutoDetectShaderContentType(shaderCode);
-				logger.Log($"Auto detecting shader type to '{shaderContentType}'", true);
-			}
-			if (string.IsNullOrWhiteSpace(settings.ExternalCompilerExeFilePath))
-			{
-				return CompileOnGPU(shaderCode, shaderContentType, logger);
+				shaderStageStrs = AutoDetectShaderContentType(shaderCode, Options.RegisterVSFileExtensions.GetStages());
+				string stages = string.Empty;
+				foreach (var stage in shaderStageStrs.Keys)
+					stages += stage + ", ";
+				logger.Log($"Auto detecting shader stages to '{stages}'", true);
 			}
 			else
 			{
-				return CompileExternal(shaderCode, shaderContentType, logger, settings);
+				if (shaderContentType == ShaderContentTypes.Header)
+				{
+					// Wrap header in a shader, as a hack it is a fragment shader.
+					shaderCode = shaderCode.Insert(0, "#version 450\n#extension GL_GOOGLE_include_directive : enable\n#line 1\n");
+					shaderCode = shaderCode.Insert(shaderCode.Length, "\nvoid main() {}");
+				}
+
+				shaderStageStrs = new Dictionary<ShaderStages, string>
+				{
+					{ mappingContentTypeToShaderStage[shaderContentType], shaderCode }
+				};
 			}
+
+			string output = string.Empty;
+			if (string.IsNullOrWhiteSpace(settings.ExternalCompilerExeFilePath))
+			{
+				foreach (var stage in shaderStageStrs)
+				{
+					output = string.Concat(output, CompileOnGPU(stage.Value, mappingShaderStageToContentType[stage.Key], logger));
+				}
+			}
+			else
+			{
+				foreach (var stage in shaderStageStrs)
+				{
+					output = string.Concat(output, CompileExternal(stage.Value, mappingShaderStageToContentType[stage.Key], logger, settings));
+				}
+			}
+
+			return output;
 		}
 
 		private static string CompileExternal(string shaderCode, string shaderContentType, ILogger logger, ICompilerSettings settings)
@@ -188,6 +299,7 @@ namespace DMS.GLSL.Errors
 				{
 					process.StartInfo.FileName = VsExpand.EnvironmentVariables(settings.ExternalCompilerExeFilePath);
 					var arguments = VsExpand.EnvironmentVariables(settings.ExternalCompilerArguments);
+
 					process.StartInfo.Arguments = $"{arguments} \"{shaderFileName}\""; //arguments
 					process.StartInfo.WorkingDirectory = tempPath;
 					process.StartInfo.UseShellExecute = false;
@@ -212,11 +324,22 @@ namespace DMS.GLSL.Errors
 			}
 		}
 
+		private static readonly IReadOnlyDictionary<string, ShaderType> mappingContentTypeToOpenGL = new Dictionary<string, ShaderType>()
+		{
+			[ShaderContentTypes.Header] = ShaderType.FragmentShader, //Hack to make it compile
+			[ShaderContentTypes.Fragment] = ShaderType.FragmentShader,
+			[ShaderContentTypes.Vertex] = ShaderType.VertexShader,
+			[ShaderContentTypes.Geometry] = ShaderType.GeometryShader,
+			[ShaderContentTypes.TessellationControl] = ShaderType.TessControlShader,
+			[ShaderContentTypes.TessellationEvaluation] = ShaderType.TessEvaluationShader,
+			[ShaderContentTypes.Compute] = ShaderType.ComputeShader,
+		};
+
 		[HandleProcessCorruptedStateExceptions]
 		private static string CompileOnGPU(string shaderCode, string shaderType, ILogger logger)
 		{
 			// detect shader type
-			if (!mappingContentTypeToShaderType.TryGetValue(shaderType, out ShaderType glShaderType))
+			if (!mappingContentTypeToOpenGL.TryGetValue(shaderType, out ShaderType glShaderType))
 			{
 				logger.Log($"Unsupported shader type '{shaderType}' by OpenTK shader compiler. Use an external compiler", true);
 			}

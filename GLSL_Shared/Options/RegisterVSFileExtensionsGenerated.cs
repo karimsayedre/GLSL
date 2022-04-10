@@ -9,7 +9,7 @@ namespace DMS.GLSL.Options
 	internal sealed partial class RegisterVSFileExtensions
 	{
 		[ImportingConstructor]
-		public RegisterVSFileExtensions(IContentTypeRegistryService contentTypeRegistry, IFileExtensionRegistryService fileExtensionRegistry, ILogger logger, IShaderFileExtensions settings)
+		public RegisterVSFileExtensions(IContentTypeRegistryService contentTypeRegistry, IFileExtensionRegistryService fileExtensionRegistry, ILogger logger, IShaderFileExtensions settings, IShaderStages stageSettings)
 		{
 			if (contentTypeRegistry is null)
 			{
@@ -31,8 +31,15 @@ namespace DMS.GLSL.Options
 				throw new System.ArgumentNullException(nameof(settings));
 			}
 
-			void Register(string sExtensions, string contentType) => RegisterFileExtensions(fileExtensionRegistry, sExtensions, contentTypeRegistry.GetContentType(contentType), logger);
+			void Register(string sExtensions, string contentType)
+			{
+				RegisterFileExtensions(fileExtensionRegistry, sExtensions, contentTypeRegistry.GetContentType(contentType), logger);
+			}
+
+			ClearExts();
+
 			Register(settings.AutoDetectShaderFileExtensions, ShaderContentTypes.AutoDetect);
+			Register(settings.ShaderHeaderFileExtensions, ShaderContentTypes.Header);
 			Register(settings.FragmentShaderFileExtensions, ShaderContentTypes.Fragment);
 			Register(settings.VertexShaderFileExtensions, ShaderContentTypes.Vertex);
 			Register(settings.GeometryShaderFileExtensions, ShaderContentTypes.Geometry);
@@ -47,6 +54,22 @@ namespace DMS.GLSL.Options
 			Register(settings.RayAnyHitShaderFileExtensions, ShaderContentTypes.RayAnyHit);
 			Register(settings.RayClosestHitShaderFileExtensions, ShaderContentTypes.RayClosestHit);
 			Register(settings.RayCallableShaderFileExtensions, ShaderContentTypes.RayCallable);
+
+			RegisterStages(stageSettings.VertexShaderStages, ShaderContentTypes.Vertex);
+			RegisterStages(stageSettings.TessellationControlShaderStages, ShaderContentTypes.TessellationControl);
+			RegisterStages(stageSettings.TessellationEvaluationShaderStages, ShaderContentTypes.TessellationEvaluation);
+			RegisterStages(stageSettings.GeometryShaderStages, ShaderContentTypes.Geometry);
+			RegisterStages(stageSettings.FragmentShaderStages, ShaderContentTypes.Fragment);
+			RegisterStages(stageSettings.ComputeShaderStages, ShaderContentTypes.Compute);
+			RegisterStages(stageSettings.MeshShaderStages, ShaderContentTypes.Mesh);
+			RegisterStages(stageSettings.TaskShaderStages, ShaderContentTypes.Task);
+			RegisterStages(stageSettings.RayGenerationShaderStages, ShaderContentTypes.RayGeneration);
+			RegisterStages(stageSettings.RayClosestHitShaderStages, ShaderContentTypes.RayClosestHit);
+			RegisterStages(stageSettings.RayMissShaderStages, ShaderContentTypes.RayMiss);
+			RegisterStages(stageSettings.RayIntersectionShaderStages, ShaderContentTypes.RayIntersection);
+			RegisterStages(stageSettings.RayAnyHitShaderStages, ShaderContentTypes.RayAnyHit);
+			RegisterStages(stageSettings.RayCallableShaderStages, ShaderContentTypes.RayCallable);
+
 		}
 	}
 }

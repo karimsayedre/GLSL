@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DMS.GLSL.Options
 {
@@ -29,20 +31,17 @@ namespace DMS.GLSL.Options
 	[InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
 	[Guid(PackageGuidString)]
 	[ProvideOptionPage(typeof(OptionPage), "GLSL language integration", "Configuration", 0, 0, true)]
+	[ProvideMenuResource("Menus.ctmenu", 1)]
+	[ProvideToolWindow(typeof(GLSLx64.ToolWindow1))]
 	public sealed class OptionsPagePackage : AsyncPackage
 	{
 		private const string PackageGuidString = "fd8ee466-e18c-45fc-b1a1-ca0dc1ec67fb";
 
 		[Export(typeof(ICompilerSettings))]
+		[Export(typeof(IShaderStages))]
 		[Export(typeof(IShaderFileExtensions))]
 		[Export(typeof(IUserKeywords))]
-		public OptionPage Options
-		{
-			get
-			{
-				return _options ?? (_options = Load() ?? new OptionPage());
-			}
-		}
+		public OptionPage Options => _options ?? (_options = Load() ?? new OptionPage());
 
 		public static OptionPage Load()
 		{
@@ -68,5 +67,22 @@ namespace DMS.GLSL.Options
 
 		private OptionPage _options;
 		private static readonly object _syncRoot = new object();
+
+	    /// <summary>
+	    /// Initialization of the package; this method is called right after the package is sited, so this is the place
+	    /// where you can put all the initialization code that rely on services provided by VisualStudio.
+	    /// </summary>
+	    /// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
+	    /// <param name="progress">A provider for progress updates.</param>
+	    /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
+	    protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+	    {
+	        await base.InitializeAsync(cancellationToken, progress);
+	    
+	        // When initialized asynchronously, the current thread may be a background thread at this point.
+	        // Do any initialization that requires the UI thread after switching to the UI thread.
+	        await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+	        await GLSLx64.KEditSettings.InitializeAsync(this);
+	    }
 	}
 }

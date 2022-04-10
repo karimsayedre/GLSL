@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 
 namespace DMS.GLSL.Errors
 {
-	internal static class ShaderContentTypes
+	internal class ShaderContentTypes
 	{
 		public const string GlslShader = "glslShader";
 
@@ -13,6 +13,7 @@ namespace DMS.GLSL.Errors
 			switch (shaderType)
 			{
 				case AutoDetect: return ".glsl";
+				case Header: return ".frag";
 				case Fragment: return ".frag";
 				case Vertex: return ".vert";
 				case Geometry: return ".geom";
@@ -43,6 +44,12 @@ namespace DMS.GLSL.Errors
 		[Name(AutoDetect)]
 		[BaseDefinition(GlslShader)]
 		internal static readonly ContentTypeDefinition glslAutoDetect;
+
+		public const string Header = "glslHeader";
+		[Export]
+		[Name(Header)]
+		[BaseDefinition(GlslShader)]
+		internal static readonly ContentTypeDefinition glslHeader;
 
 		public const string Fragment = "glslFragment";
 		[Export]

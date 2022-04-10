@@ -50,7 +50,7 @@ namespace DMS.GLSL.Classification
 
 			observableSnapshot
 				.Throttle(TimeSpan.FromSeconds(0.3f))
-				.Subscribe(_ => UpdateSpans());
+				.Subscribe(_ =>UpdateSpans());
 
 			//UpdateSpans(new SnapshotSpan(textBuffer.CurrentSnapshot, 0, textBuffer.CurrentSnapshot.Length));
 			//textBuffer.Changed += (s, a) =>
