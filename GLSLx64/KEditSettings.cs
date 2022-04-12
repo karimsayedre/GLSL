@@ -5,7 +5,9 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using GLSLx64.Properties;
 using Task = System.Threading.Tasks.Task;
+using static GLSLx64.SettingsWindow;
 
 namespace GLSLx64
 {
@@ -89,17 +91,12 @@ namespace GLSLx64
 		private void Execute(object sender, EventArgs e)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
-			string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-			string title = "KEditSettings";
 
-			// Show a message box to prove we were here
-			VsShellUtilities.ShowMessageBox(
-				this.package,
-				message,
-				title,
-				OLEMSGICON.OLEMSGICON_INFO,
-				OLEMSGBUTTON.OLEMSGBUTTON_OK,
-				OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+			this.package.JoinableTaskFactory.RunAsync(async delegate
+				{
+					var window = new SettingsWindow();
+					window.Show();
+				});
 		}
 	}
 }

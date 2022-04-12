@@ -25,6 +25,18 @@ namespace GLSLx64.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CompileDelay {
+            get {
+                return ((int)(this["CompileDelay"]));
+            }
+            set {
+                this["CompileDelay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool LiveCompilation {
             get {
@@ -32,6 +44,234 @@ namespace GLSLx64.Properties {
             }
             set {
                 this["LiveCompilation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CompilerPath {
+            get {
+                return ((string)(this["CompilerPath"]));
+            }
+            set {
+                this["CompilerPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ExtraArguments {
+            get {
+                return ((string)(this["ExtraArguments"]));
+            }
+            set {
+                this["ExtraArguments"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserKeyWords1 {
+            get {
+                return ((string)(this["UserKeyWords1"]));
+            }
+            set {
+                this["UserKeyWords1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserKeyWords2 {
+            get {
+                return ((string)(this["UserKeyWords2"]));
+            }
+            set {
+                this["UserKeyWords2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AutoDetectedExt {
+            get {
+                return ((string)(this["AutoDetectedExt"]));
+            }
+            set {
+                this["AutoDetectedExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string VertExt {
+            get {
+                return ((string)(this["VertExt"]));
+            }
+            set {
+                this["VertExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GeomExt {
+            get {
+                return ((string)(this["GeomExt"]));
+            }
+            set {
+                this["GeomExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FragExt {
+            get {
+                return ((string)(this["FragExt"]));
+            }
+            set {
+                this["FragExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MeshExt {
+            get {
+                return ((string)(this["MeshExt"]));
+            }
+            set {
+                this["MeshExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CompExt {
+            get {
+                return ((string)(this["CompExt"]));
+            }
+            set {
+                this["CompExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TaskExt {
+            get {
+                return ((string)(this["TaskExt"]));
+            }
+            set {
+                this["TaskExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RayAnyHitExt {
+            get {
+                return ((string)(this["RayAnyHitExt"]));
+            }
+            set {
+                this["RayAnyHitExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RayCallableExt {
+            get {
+                return ((string)(this["RayCallableExt"]));
+            }
+            set {
+                this["RayCallableExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RayClosestExt {
+            get {
+                return ((string)(this["RayClosestExt"]));
+            }
+            set {
+                this["RayClosestExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RayGenExt {
+            get {
+                return ((string)(this["RayGenExt"]));
+            }
+            set {
+                this["RayGenExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RayIntersectExt {
+            get {
+                return ((string)(this["RayIntersectExt"]));
+            }
+            set {
+                this["RayIntersectExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RayMissExt {
+            get {
+                return ((string)(this["RayMissExt"]));
+            }
+            set {
+                this["RayMissExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TessControlExt {
+            get {
+                return ((string)(this["TessControlExt"]));
+            }
+            set {
+                this["TessControlExt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TessEvalExt {
+            get {
+                return ((string)(this["TessEvalExt"]));
+            }
+            set {
+                this["TessEvalExt"] = value;
             }
         }
     }

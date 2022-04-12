@@ -32,7 +32,7 @@ namespace DMS.GLSL.Options
 	[Guid(PackageGuidString)]
 	[ProvideOptionPage(typeof(OptionPage), "GLSL language integration", "Configuration", 0, 0, true)]
 	[ProvideMenuResource("Menus.ctmenu", 1)]
-	[ProvideToolWindow(typeof(GLSLx64.ToolWindow1))]
+	[ProvideToolWindow(typeof(GLSLx64.SettingsWindow))]
 	public sealed class OptionsPagePackage : AsyncPackage
 	{
 		private const string PackageGuidString = "fd8ee466-e18c-45fc-b1a1-ca0dc1ec67fb";

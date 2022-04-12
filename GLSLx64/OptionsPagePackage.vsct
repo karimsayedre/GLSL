@@ -67,6 +67,13 @@
           <ButtonText>Invokesfghdfhgdfghretyertyertyertysfttings</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidOptionsPagePackageCmdSet" id="cmdidSettingsWindowCommand" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="guidImages2" id="bmpPic1" />
+        <Strings>
+          <ButtonText>SettingsWindow</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -77,7 +84,7 @@
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
       <Bitmap guid="guidImages" href="Resources\KEditSettings.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
-      <Bitmap guid="guidImages1" href="Resources\ToolWindow1Command.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages2" href="Resources\SettingsWindowCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -93,6 +100,7 @@
       <IDSymbol name="SubMenu" value="0x1100" />
       <IDSymbol name="SubMenuGroup" value="0x1150" />
       <IDSymbol name="cmdidTestSubCommand" value="0x0105" />
+      <IDSymbol value="4433" name="cmdidSettingsWindowCommand" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{ddeefdbf-0dc6-4dca-8f14-2b4a96cde847}">
@@ -103,8 +111,17 @@
       <IDSymbol name="bmpPicArrows" value="5" />
       <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
-  
+
     <GuidSymbol value="{70abd84a-684f-4d7c-b1df-96bcdfc663e0}" name="guidImages1">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{7850ad90-96ce-472c-b16f-5e5ec5abda03}" name="guidImages2">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
