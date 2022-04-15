@@ -48,6 +48,11 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ExtWindow.cs" />
+    <Compile Include="ExtWindowCommand.cs" />
+    <Compile Include="ExtWindowControl.xaml.cs">
+      <DependentUpon>ExtWindowControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KEditSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -55,18 +60,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SettingsWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsWindow.Designer.cs">
-      <DependentUpon>SettingsWindow.cs</DependentUpon>
-    </Compile>
+    <Compile Include="SettingsSources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Properties\DataSources\DMS.GLSL.Contracts.ICompilerSettings.datasource" />
-    <None Include="Properties\DataSources\DMS.GLSL.Options.OptionPage.datasource" />
-    <None Include="Properties\DataSources\GLSLx64.Properties.Settings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,8 +93,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Resources\ExtWindowCommand.png" />
     <Content Include="Resources\KEditSettings.png" />
-    <Content Include="Resources\SettingsWindowCommand.png" />
     <VSCTCompile Include="OptionsPagePackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
@@ -116,6 +113,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Community.VisualStudio.Toolkit.17">
+      <Version>17.0.430</Version>
+    </PackageReference>
+    <PackageReference Include="Extended.Wpf.Toolkit">
+      <Version>4.3.0</Version>
+    </PackageReference>
     <PackageReference Include="GLSLhelper">
       <Version>0.3.53</Version>
     </PackageReference>
@@ -151,11 +154,18 @@
     <PackageReference Include="System.Reactive">
       <Version>5.0.0</Version>
     </PackageReference>
+    <PackageReference Include="Xceed.Products.Wpf.Toolkit.Base">
+      <Version>4.3.22108.21080</Version>
+    </PackageReference>
+    <PackageReference Include="Xceed.Products.Wpf.Toolkit.Full">
+      <Version>4.3.22108.21080</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SettingsWindow.resx">
-      <DependentUpon>SettingsWindow.cs</DependentUpon>
-    </EmbeddedResource>
+    <Page Include="ExtWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="..\GLSL_Shared\GLSL_Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

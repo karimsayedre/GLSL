@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="GLSLx64.ExtWindowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:platform="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:toolkit="clr-namespace:Community.VisualStudio.Toolkit;assembly=Community.VisualStudio.Toolkit"
+             xmlns:xctt="http://schemas.xceed.com/wpf/xaml/toolkit/themes"
+
+
+             Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
+             Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="600"
+             
+             Name="MyToolWindow">
+
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Core Controls -->
+                <!-- <xctt:ToolkitMetroDarkThemeResourceDictionary /> -->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.RowSpan="2">
+            <TreeView Grid.Column="0"  toolkit:Themes.UseVsTheme="True">
+                <TreeViewItem Header="Settings" IsSelected="True" IsExpanded="True">
+                    <TreeViewItem Header="General" Selected="GeneralTree_OnSelected"/>
+                    <TreeViewItem Header="Extensions" Selected="ExtensionsTree_OnSelected"/>
+                    <TreeViewItem Header="Stages" Selected="StagesTree_OnSelected"/>
+                </TreeViewItem>
+                <TreeViewItem Header="About"/>
+                <TreeViewItem Header="Help"/>
+            </TreeView>
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="1" Padding="5 5 5 10 ">
+            <xctk:PropertyGrid x:Name="GeneralPropertyGrid" >
+
+            </xctk:PropertyGrid>
+        </Border>
+
+        <Border Grid.Column="1" Grid.Row="1">
+            <Grid>
+                <Button
+                    Name="OkButton"
+                    Content="OK"
+                    Height="23"
+                    HorizontalAlignment="Right" 
+                    Margin="0,0,175,12"
+                    VerticalAlignment="Bottom" 
+                    Width="75" 
+                    Click="OKButton_OnClickKButton"
+                    IsDefault="True"/>
+
+                <Button
+                    Name="CancelButton"
+                    Content="Cancel" 
+                    Height="23" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,0,93,12"
+                    VerticalAlignment="Bottom"
+                    Width="75" 
+                    IsCancel="True" />
+
+                <Button
+                    Name="ApplyButton"
+                    Content="Apply" 
+                    Height="23" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,0,12,12"
+                    VerticalAlignment="Bottom"
+                    Width="75" />
+            </Grid>
+        </Border>
+
+
+
+    </Grid>
+</UserControl>

@@ -46,7 +46,7 @@ namespace GLSL_Shared.Core
 					Match match = Regex.Match(shaderCode, $@"#\s*version\s+\d{{3,}}(\s+\w+|)\s*\r*\n\s*#\s*pragma\s+stage\s*:\s*{v}\s*\r*\n");
 					if (match.Success)
 					{
-					result.Add(new Tuple<int, ShaderStages>(match.Index, ext.Key));
+						result.Add(new Tuple<int, ShaderStages>(match.Index, ext.Key));
 						break;
 					}
 				}

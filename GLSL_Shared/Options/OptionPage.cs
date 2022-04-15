@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace DMS.GLSL.Options
 {
+	[ComVisible(true)]
 	public partial class OptionPage : DialogPage, ICompilerSettings, IUserKeywords
 	{
 		private string _userKeyWords1;

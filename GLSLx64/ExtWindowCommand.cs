@@ -5,7 +5,6 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using GLSLx64.Properties;
 using Task = System.Threading.Tasks.Task;
 
 namespace GLSLx64
@@ -13,12 +12,12 @@ namespace GLSLx64
 	/// <summary>
 	/// Command handler
 	/// </summary>
-	internal sealed class KEditSettings
+	internal sealed class ExtWindowCommand
 	{
 		/// <summary>
 		/// Command ID.
 		/// </summary>
-		public const int CommandId = 0x0100;
+		public const int CommandId = 4437;
 
 		/// <summary>
 		/// Command menu group (command set GUID).
@@ -31,12 +30,12 @@ namespace GLSLx64
 		private readonly AsyncPackage package;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="KEditSettings"/> class.
+		/// Initializes a new instance of the <see cref="ExtWindowCommand"/> class.
 		/// Adds our command handlers for menu (commands must exist in the command table file)
 		/// </summary>
 		/// <param name="package">Owner package, not null.</param>
 		/// <param name="commandService">Command service to add command to, not null.</param>
-		private KEditSettings(AsyncPackage package, OleMenuCommandService commandService)
+		private ExtWindowCommand(AsyncPackage package, OleMenuCommandService commandService)
 		{
 			this.package = package ?? throw new ArgumentNullException(nameof(package));
 			commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -49,7 +48,7 @@ namespace GLSLx64
 		/// <summary>
 		/// Gets the instance of the command.
 		/// </summary>
-		public static KEditSettings Instance
+		public static ExtWindowCommand Instance
 		{
 			get;
 			private set;
@@ -72,25 +71,21 @@ namespace GLSLx64
 		/// <param name="package">Owner package, not null.</param>
 		public static async Task InitializeAsync(AsyncPackage package)
 		{
-			// Switch to the main thread - the call to AddCommand in KEditSettings's constructor requires
+			// Switch to the main thread - the call to AddCommand in ExtWindowCommand's constructor requires
 			// the UI thread.
 			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
-			OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-			Instance = new KEditSettings(package, commandService);
+			OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
+			Instance = new ExtWindowCommand(package, commandService);
 		}
 
 		/// <summary>
-		/// This function is the callback used to execute the command when the menu item is clicked.
-		/// See the constructor to see how the menu item is associated with this function using
-		/// OleMenuCommandService service and MenuCommand class.
+		/// Shows the tool window when the menu item is clicked.
 		/// </summary>
-		/// <param name="sender">Event sender.</param>
-		/// <param name="e">Event args.</param>
+		/// <param name="sender">The event sender.</param>
+		/// <param name="e">The event args.</param>
 		private void Execute(object sender, EventArgs e)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
-
 			this.package.JoinableTaskFactory.RunAsync(async delegate
 			{
 				ToolWindowPane window = await this.package.ShowToolWindowAsync(typeof(ExtWindow), 0, true, this.package.DisposalToken);

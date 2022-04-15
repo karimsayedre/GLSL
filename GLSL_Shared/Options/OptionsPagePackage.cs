@@ -32,7 +32,7 @@ namespace DMS.GLSL.Options
 	[Guid(PackageGuidString)]
 	[ProvideOptionPage(typeof(OptionPage), "GLSL language integration", "Configuration", 0, 0, true)]
 	[ProvideMenuResource("Menus.ctmenu", 1)]
-	[ProvideToolWindow(typeof(GLSLx64.SettingsWindow))]
+	[ProvideToolWindow(typeof(GLSLx64.ExtWindow))]
 	public sealed class OptionsPagePackage : AsyncPackage
 	{
 		private const string PackageGuidString = "fd8ee466-e18c-45fc-b1a1-ca0dc1ec67fb";
@@ -83,6 +83,7 @@ namespace DMS.GLSL.Options
 	        // Do any initialization that requires the UI thread after switching to the UI thread.
 	        await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 	        await GLSLx64.KEditSettings.InitializeAsync(this);
+	        await GLSLx64.ExtWindowCommand.InitializeAsync(this);
 	    }
 	}
 }

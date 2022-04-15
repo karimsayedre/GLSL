@@ -74,6 +74,34 @@
           <ButtonText>SettingsWindow</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidOptionsPagePackageCmdSet" id="cmdidToolWindow1Command" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="guidImages3" id="bmpPic1" />
+        <Strings>
+          <ButtonText>ToolWindow1</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidOptionsPagePackageCmdSet" id="cmdidMyWindowCommand" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="guidImages4" id="bmpPic1" />
+        <Strings>
+          <ButtonText>MyWindow</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidOptionsPagePackageCmdSet" id="cmdidToolWindow1Command1" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="guidImages5" id="bmpPic1" />
+        <Strings>
+          <ButtonText>ToolWindow1</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidOptionsPagePackageCmdSet" id="cmdidExtWindowCommand" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="guidImages6" id="bmpPic1" />
+        <Strings>
+          <ButtonText>ExtWindow</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -84,7 +112,7 @@
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
       <Bitmap guid="guidImages" href="Resources\KEditSettings.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
-      <Bitmap guid="guidImages2" href="Resources\SettingsWindowCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages6" href="Resources\ExtWindowCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -101,6 +129,10 @@
       <IDSymbol name="SubMenuGroup" value="0x1150" />
       <IDSymbol name="cmdidTestSubCommand" value="0x0105" />
       <IDSymbol value="4433" name="cmdidSettingsWindowCommand" />
+      <IDSymbol value="4434" name="cmdidToolWindow1Command" />
+      <IDSymbol value="4435" name="cmdidMyWindowCommand" />
+      <IDSymbol value="4436" name="cmdidToolWindow1Command1" />
+      <IDSymbol value="4437" name="cmdidExtWindowCommand" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{ddeefdbf-0dc6-4dca-8f14-2b4a96cde847}">
@@ -122,6 +154,42 @@
     </GuidSymbol>
   
     <GuidSymbol value="{7850ad90-96ce-472c-b16f-5e5ec5abda03}" name="guidImages2">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{8778515e-9775-4982-89b0-e625907b4000}" name="guidImages3">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{a5b537e6-2260-4dd4-b48e-35b2d7a59b5d}" name="guidImages4">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{36cf9c26-90f4-4b77-b6a5-e5aea2188d0d}" name="guidImages5">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{9e3247d3-0b18-405a-b0c5-4ee3792a7ced}" name="guidImages6">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
